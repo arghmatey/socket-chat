@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import EnterForm from './components/EnterForm';
@@ -14,8 +14,10 @@ const App = () => {
       </header>
       <main>
         <Router>
-          <Route exact path='/' component={EnterForm} />
-          <Route exact path='/chatroom' component={Chatroom} />
+          <Routes>
+            <Route exact path='/' element={<EnterForm/>} />
+            <Route exact path='/chatroom' element={<Chatroom/>} />
+          </Routes>
         </Router>
       </main>
     </div>
