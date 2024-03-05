@@ -42,8 +42,6 @@ const Chatroom = () => {
     useEffect(() => {
         socket.on('message', msg => {
             setMessages(messages => [...messages, msg]);
-
-            chatEl.current.scrollTop = chatEl.current.scrollHeight;
         });
     }, []);
 

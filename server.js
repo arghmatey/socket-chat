@@ -22,39 +22,53 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', (socket) => {
-    console.log('according to this data i am much stronger than ' + socket.id);
+    // Console strictly for me to check reloads when changing stuff
+    console.log('A new user connected: ' + socket.id);
+
+    // USER JOINS
     socket.on('join', ({ username, room }) => {
         const { user } = userEnter({ id: socket.id, username, room });
 
         socket.join(user.room);
 
+        // Message to user joining
         socket.emit('message', {
-            user: 'SocketChat',
-            text: `Welcome to ${user.room}, ${user.username}!`
+            text: `Welcome to ${user.room}, ${user.username}!`,
+            isSystemMessage: true,
+            timeStamp: new Date().toISOString()
         });
+
+        // Message to current users in room
         socket.broadcast.to(user.room).emit('message', {
-            user: 'SocketChat',
-            text: `${user.username} has entered the chat.`
+            text: `${user.username} has entered the chat.`,
+            isSystemMessage: true,
+            timeStamp: new Date().toISOString()
         });
 
         io.to(user.room).emit('roomUsers', { room: user.room, users: usersInRoom(user.room) });
     });
 
-    socket.on('sendMessage', msg => {
+
+    // MESSAGE SENDS
+    socket.on('sendMessage', message => {
         const user = currentUser(socket.id);
 
         io.to(user.room).emit('message', {
             user: user.username,
-            text: msg
+            text: message,
+            timeStamp: new Date().toISOString()
         });
     });
 
+
+    // USER DISCONNECTS
     socket.on('disconnect', () => {
         console.log('user disconnected!')
+
         const user = userLeave(socket.id);
 
         if (user) {
-            io.to(user.room).emit('message', {
+            socket.broadcast.to(user.room).emit('message', {
                 user: 'SocketChat',
                 text: `${user.username} has left the chat.`
             });
