@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ChatMessages = (props) => {
+const ChatMessages = ({ messages, username }) => {
     return (
         <div className="messagesWrapper">
-            {props.messages.map((message, idx) => (
-                props.username === message.user
+            {messages.map((message, idx) => (
+                username === message.user
                     ?
                     <div key={idx} className="userMessage" >
                         <h4>{message.user}</h4>
