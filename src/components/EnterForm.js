@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EnterForm = () => {
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = e => {
         setUsername(e.target.value);
@@ -17,7 +19,7 @@ const EnterForm = () => {
         e.preventDefault();
 
         if (room && username) {
-            redirect(`/chatroom?username=${username}&room=${room}`);
+            navigate(`/chatroom?username=${username}&room=${room}`);
         }
     }
 
@@ -36,12 +38,16 @@ const EnterForm = () => {
                         className="formInput"
                         onChange={handleRoomChange}
                     >
-                        <option disabled default>Select a Room</option>
-                        <option>Room 1</option>
-                        <option>Room 2</option>
-                        <option>Room 3</option>
+                        <option disabled="" default>Select a Room</option>
+                        <option value="room1">Room 1</option>
+                        <option value="room2">Room 2</option>
+                        <option value="room3">Room 3</option>
                     </select>
-                    <button className="formButton">Enter Room</button>
+                    <button
+                        type="submit" className="formButton"
+                    >
+                        Enter Room
+                    </button>
             </form>
         </div>
     )
