@@ -1,18 +1,29 @@
 import React from 'react';
 
-const NewMessage = (props) => {
+const NewMessage = ({ 
+    message,
+    setMessage,
+    sendMessage
+}) => {
+
+    const handleKeyUp = e => {
+        if (e.key === 'Enter') {
+            sendMessage(e)
+        }
+    }
+
     return (
         <div className='newWrapper'>
             <input
                 placeholder='Type your message here...'
                 className='newMessage'
-                value={props.message}
-                onChange={e => props.setMessage(e.target.value)}
-                onKeyPress={e => e.key === 'Enter' ? props.sendMessage(e) : null} />
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                onKeyUp={handleKeyUp} />
             <button
                 className='messageSend'
                 type='submit'
-                onClick={e => props.sendMessage(e)}>Send</button>
+                onClick={sendMessage}>Send</button>
         </div>
     )
 }
