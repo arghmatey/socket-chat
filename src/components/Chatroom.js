@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import { io } from 'socket.io-client';
 
@@ -8,21 +9,24 @@ import NewMessage from './NewMessage';
 
 let socket;
 
-const Chatroom = ({ location }) => {
-    const [username, setUsername] = useState('');
-    const [room, setRoom] = useState('');
+const Chatroom = () => {
+    const location = useLocation();
+    const parsed = queryString.parse(location.search);
+
+    const username = parsed['username'];
+    const room = parsed['room'];
+
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    const [users, setUsers] = useState('');
+
+    const [users, setUsers] = useState([]);
+
     const chatEl = useRef(null);
 
     useEffect(() => {
         socket = io();
-
-        const { username, room } = queryString.parse(location.search);
-        setUsername(username);
-        setRoom(room);
-
+        // TODO:    Add error handling.
+        //          Dispaly error message.
         socket.emit('join', { username, room });
 
         socket.on('roomUsers', ({ users }) => {
@@ -33,7 +37,7 @@ const Chatroom = ({ location }) => {
             socket.emit('disconnect');
             socket.off();
         }
-    }, [location.search]);
+    }, [username, room]);
 
     useEffect(() => {
         socket.on('message', msg => {
