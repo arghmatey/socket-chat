@@ -9,10 +9,10 @@
 }
 
 main {
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 .formWrapper {
@@ -31,6 +31,33 @@ main {
   display: grid;
   grid-template-columns: 25% 75%;
   grid-template-rows: 90% 10%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 80% 10%;
+
+    .messagesContainer {
+      grid-column: 1;
+      grid-row: 2 / 3;
+    }
+
+    .usersWrapper {
+      grid-column: 1;
+      grid-row: 1 / 2;
+      padding: 5px;
+
+      h3 {
+        margin: 0;
+      }
+    }
+
+    .newWrapper {
+      grid-column: 1;
+      grid-row: 3 / 4;
+    }
+  }
 }
 
 .messagesContainer {
@@ -85,6 +112,7 @@ main {
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   float: left;
+  padding: 5px;
 }
 
 .chatMessage *, .userMessage * {
