@@ -2,7 +2,7 @@ import React from 'react';
 
 const NewMessage = ({ 
     message,
-    setMessage,
+    updateMessage,
     sendMessage
 }) => {
 
@@ -18,12 +18,12 @@ const NewMessage = ({
                 placeholder='Type your message here...'
                 className='newMessage'
                 value={message}
-                onChange={e => setMessage(e.target.value)}
+                onChange={e => updateMessage(e)}
                 onKeyUp={handleKeyUp} />
-            <button
+            {/* <button
                 className='messageSend'
                 type='submit'
-                onClick={sendMessage}>Send</button>
+                onClick={sendMessage}>Send</button> */}
         </div>
     )
 }

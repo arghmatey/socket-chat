@@ -61,7 +61,6 @@ main {
 }
 
 .messagesContainer {
-  border-bottom: 1px solid grey;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   flex: 1 1 auto;
@@ -78,16 +77,8 @@ main {
 }
 
 .newWrapper {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
-}
-
-.newMessage {
-  width: 75%;
-  padding: 8px;
 }
 
 .systemMessage {
@@ -115,12 +106,29 @@ main {
   padding: 5px;
 }
 
-.chatMessage *, .userMessage * {
-  margin: 0;
-  padding: 5px 10px;
+.chatMessage,
+.userMessage {
+  .messageHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    h4 {
+      margin: 0 0 5px;
+    }
+
+    .messageTime {
+      font-size: 12px;
+      color: grey;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
 }
 
-.userMessage {
+.userMessage, .newMessage {
   background-color: lavender;
   width: 60%;
   height: auto;
@@ -128,4 +136,10 @@ main {
   border-radius: 15px 15px 0px 15px;
   float: right;
   text-align: left;
+  padding: 5px 10px;
+}
+
+.newMessage {
+  border: none;
+  font-size: 16px;
 }

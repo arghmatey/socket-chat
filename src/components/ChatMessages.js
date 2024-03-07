@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ChatMessages = ({ messages, username }) => {
+const ChatMessages = ({ messages, liveMessage, username }) => {
+
     return (
         <div className="messagesWrapper">
             {messages.map((message, idx) => {
@@ -24,16 +25,31 @@ const ChatMessages = ({ messages, username }) => {
                     username === user
                     ?
                     <div key={idx} className="userMessage">
-                        <h4>{user}</h4>
+                        <div className="messageHeader">
+                            <h4>{user}</h4>
+                                <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                        </div>
                         <p>{text}</p>
                     </div>
                     :
                     <div key={idx} className="chatMessage">
-                        <h4>{user}</h4>
+                        <div className="messageHeader">
+                            <h4>{user}</h4>
+                                <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                        </div>
                         <p>{text}</p>
                     </div>
                 )
             })}
+            {liveMessage && 
+                <div className="chatMessage">
+                    <div className="messageHeader">
+                        <h4>{liveMessage.user}</h4>
+                        <span className="messageTime">LIVE</span>
+                    </div>
+                    <p>{liveMessage.text}</p>
+                </div>
+            }
         </div >
     )
 }

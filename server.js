@@ -53,6 +53,8 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', message => {
         const user = currentUser(socket.id);
 
+        socket.to(user.room).emit('clearLiveMessage')
+
         io.to(user.room).emit('message', {
             user: user.username,
             text: message,
@@ -61,16 +63,26 @@ io.on('connection', (socket) => {
     });
 
 
+    // LIVE MESSAGE BROADCASTS TO USERS IN ROOM 
+    socket.on('liveMessage', ({ user, message, room }) => {
+        socket.broadcast.to(room).emit('liveMessage', {
+            user,
+            text: message
+        })
+    })
+
+
     // USER DISCONNECTS
-    socket.on('disconnect', () => {
+    socket.on('leaveRoom', () => {
         console.log('user disconnected!')
 
         const user = userLeave(socket.id);
 
         if (user) {
             socket.broadcast.to(user.room).emit('message', {
-                user: 'SocketChat',
-                text: `${user.username} has left the chat.`
+                text: `${user.username} has left the chat`,
+                isSystemMessage: true,
+                timeStamp: new Date().toISOString()
             });
             io.to(user.room).emit('roomUsers', {
                 room: user.room,

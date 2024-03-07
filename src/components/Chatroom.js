@@ -19,6 +19,8 @@ const Chatroom = () => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
+    const [liveMessage, setLiveMessage] = useState(null)
+
     const [users, setUsers] = useState([]);
 
     const chatEl = useRef(null);
@@ -34,7 +36,7 @@ const Chatroom = () => {
         });
 
         return () => {
-            socket.emit('disconnect');
+            socket.emit('leaveRoom');
             socket.off();
         }
     }, [username, room]);
@@ -43,6 +45,14 @@ const Chatroom = () => {
         socket.on('message', msg => {
             setMessages(messages => [...messages, msg]);
         });
+
+        socket.on('liveMessage', newMessage => {
+            setLiveMessage(newMessage);
+        })
+
+        socket.on('clearLiveMessage', () => {
+            setLiveMessage(null)
+        })
     }, []);
 
     const sendMessage = e => {
@@ -54,12 +64,21 @@ const Chatroom = () => {
         }
     }
 
+    const updateMessage = e => {
+        socket.emit('liveMessage', { 
+            user: username,
+            message: e.target.value,
+            room});
+        setMessage(e.target.value);
+    }
+
     return (
         <div className="chatWrapper">
             <div ref={chatEl} className="messagesContainer">
                 <ChatMessages
                     username={username}
                     messages={messages}
+                    liveMessage={liveMessage}
                 />
             </div>
             <RoomInfo
@@ -68,7 +87,7 @@ const Chatroom = () => {
             />
             <NewMessage
                 message={message}
-                setMessage={setMessage}
+                updateMessage={updateMessage}
                 sendMessage={sendMessage}
             />
         </div>
