@@ -13,7 +13,7 @@ const NewMessage = ({
     }
 
     return (
-        <div className='newWrapper'>
+        <div className='newMessageWrapper'>
             <input
                 placeholder='Type your message here...'
                 className='newMessage'

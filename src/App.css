@@ -95,6 +95,11 @@ main {
   margin: 0 0 2px 0;
 }
 
+.chatMessageWrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .chatMessage {
   background-color: lightblue;
   width: 60%;
@@ -102,8 +107,28 @@ main {
   margin: 10px;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
-  float: left;
-  padding: 5px;
+  padding: 5px 15px;
+}
+
+.userMessageWrapper, .newMessageWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userMessage, .newMessage {
+  background-color: lavender;
+  width: 60%;
+  height: auto;
+  margin: 10px;
+  border-radius: 15px 15px 0px 15px;
+  float: right;
+  text-align: left;
+  padding: 5px 15px;
+}
+
+.newMessage {
+  border: none;
+  font-size: 16px;
 }
 
 .chatMessage,
@@ -126,20 +151,4 @@ main {
   p {
     margin: 0;
   }
-}
-
-.userMessage, .newMessage {
-  background-color: lavender;
-  width: 60%;
-  height: auto;
-  margin: 10px;
-  border-radius: 15px 15px 0px 15px;
-  float: right;
-  text-align: left;
-  padding: 5px 10px;
-}
-
-.newMessage {
-  border: none;
-  font-size: 16px;
 }

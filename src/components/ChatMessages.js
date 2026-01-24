@@ -24,30 +24,36 @@ const ChatMessages = ({ messages, liveMessage, username }) => {
                 return (
                     username === user
                     ?
-                    <div key={idx} className="userMessage">
-                        <div className="messageHeader">
-                            <h4>{user}</h4>
-                                <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                    <div key={idx} className="userMessageWrapper">
+                        <div className="userMessage">
+                            <div className="messageHeader">
+                                <h4>{user}</h4>
+                                    <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                            </div>
+                            <p>{text}</p>
                         </div>
-                        <p>{text}</p>
                     </div>
                     :
-                    <div key={idx} className="chatMessage">
-                        <div className="messageHeader">
-                            <h4>{user}</h4>
-                                <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                    <div key={idx} className="chatMessageWrapper">
+                        <div className="chatMessage">
+                            <div className="messageHeader">
+                                <h4>{user}</h4>
+                                    <span className="messageTime">{new Date(timeStamp).toLocaleTimeString()}</span>
+                            </div>
+                            <p>{text}</p>
                         </div>
-                        <p>{text}</p>
                     </div>
                 )
             })}
             {liveMessage && 
-                <div className="chatMessage">
-                    <div className="messageHeader">
-                        <h4>{liveMessage.user}</h4>
-                        <span className="messageTime">LIVE</span>
+                <div className="chatMessageWrapper">
+                    <div className="chatMessage">
+                        <div className="messageHeader">
+                            <h4>{liveMessage.user}</h4>
+                            <span className="messageTime">LIVE</span>
+                        </div>
+                        <p>{liveMessage.text}</p>
                     </div>
-                    <p>{liveMessage.text}</p>
                 </div>
             }
         </div >
